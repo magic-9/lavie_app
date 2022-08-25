@@ -21,9 +21,13 @@ class HomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
 
+              SizedBox(
+                height: 80,
+              ),
+
               Image.asset("assets/images/logo.png" , height: 40),
               searchWidget(context),
-              categoriesWidget(),
+              categoriesWidget(context),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 10,
@@ -124,15 +128,18 @@ class HomeScreen extends StatelessWidget {
                                               color: Colors.white,
                                               fontSize: 18
                                           ),),
-                                          onPressed: ()=>{},
+                                          onPressed: (){
+                                            print("click");
+                                            CubitApp.get(context).getProducts();
+                                          },
                                           style: ElevatedButton.styleFrom(
                                             primary: AppColors.primary,
                                           ),
                                         ),
                                       )
                                   ),Positioned(
-                                      top: 90,
-                                      left: 137,
+                                      top: 98,
+                                      left: 125,
                                       child: Text('1', textAlign: TextAlign.center, style: TextStyle(
                                           color: Color.fromRGBO(0, 0, 0, 1),
                                           fontFamily: 'Roboto',
@@ -143,19 +150,25 @@ class HomeScreen extends StatelessWidget {
                                       ),)
                                   ),Positioned(
                                       top: 90,
-                                      left: 150,
+                                      left: 140,
                                       child: Container(
-                                        width: 14,
-                                        height: 14,
+                                        width: 30,
+                                        height: 30,
                                         child: Icon(Icons.add, size: 14),
+                                        decoration: BoxDecoration(
+                                          color: Color(0xffF7F6F7)
+                                        ),
                                       )
                                   ),Positioned(
                                       top: 90,
-                                      left: 113,
+                                      left: 90,
                                       child: Container(
-                                        width: 8,
-                                        height: 8,
-                                        child: Icon(Icons.dataset_rounded),
+                                        width: 30,
+                                        height: 30,
+                                        child: Icon(Icons.remove, size: 14),
+                                        decoration: BoxDecoration(
+                                            color: Color(0xffF7F6F7)
+                                        ),
                                       )
                                   ),
                                 ]
@@ -165,119 +178,6 @@ class HomeScreen extends StatelessWidget {
                 ),
               )
 
-
-
-
-
-
-              // Padding(
-              //   padding: EdgeInsets.symmetric(
-              //     horizontal: 10
-              //   ),
-              //   child: Container(
-              //     height: 600,
-              //     child:  GridView.builder(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              //         crossAxisCount: 2,
-              //         crossAxisSpacing:10,
-              //         mainAxisSpacing: 40
-              //
-              //     ), itemBuilder: (context, index){
-              //       return  Center(
-              //         child: Container(
-              //             width: 176,
-              //             height: 600,
-              //
-              //             child: Stack(
-              //                 children: <Widget>[
-              //                   Positioned(
-              //                       top: 58,
-              //                       left: 0,
-              //                       child: Container(
-              //                           width: 176,
-              //                           height: 227,
-              //                           decoration: BoxDecoration(
-              //                             borderRadius : BorderRadius.only(
-              //                               topLeft: Radius.circular(10),
-              //                               topRight: Radius.circular(10),
-              //                               bottomLeft: Radius.circular(10),
-              //                               bottomRight: Radius.circular(10),
-              //                             ),
-              //                             boxShadow : [BoxShadow(
-              //                                 color: Color.fromRGBO(0, 0, 0, 0.09000000357627869),
-              //                                 offset: Offset(0,2),
-              //                                 blurRadius: 9
-              //                             )],
-              //                             color : Color.fromRGBO(255, 255, 255, 1),
-              //                           )
-              //                       )
-              //                   ),Positioned(
-              //                       top: 0,
-              //                       left: 13,
-              //                       child: Container(
-              //                           width: 82,
-              //                           height: 164,
-              //                           decoration: BoxDecoration(
-              //                             image : DecorationImage(
-              //                                 image: AssetImage('assets/images/Background-2022-08-09T1459313.png'),
-              //                                 fit: BoxFit.fitWidth
-              //                             ),
-              //                           )
-              //                       )
-              //                   ),Positioned(
-              //                       top: 70,
-              //                       left: 48,
-              //                       child: Container(
-              //                           width: 47,
-              //                           height: 94,
-              //                           decoration: BoxDecoration(
-              //                             image : DecorationImage(
-              //                                 image: AssetImage('assets/images/Background-2022-08-09T1459313.png'),
-              //                                 fit: BoxFit.fitWidth
-              //                             ),
-              //                           )
-              //                       )
-              //                   ),Positioned(
-              //                       top: 130,
-              //                       left: 14,
-              //                       child: Text('GARDENIA PLANT', textAlign: TextAlign.left, style: TextStyle(
-              //                           color: Colors.black,
-              //                           fontSize: 16,
-              //                           letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
-              //                           fontWeight: FontWeight.normal,
-              //                           height: 5
-              //                       ),)
-              //                   ),Positioned(
-              //                       top: 150,
-              //                       left: 14,
-              //                       child: Text('70 EGP', textAlign: TextAlign.left, style: TextStyle(
-              //                           color: Color.fromRGBO(0, 0, 0, 1),
-              //                           fontFamily: 'Roboto',
-              //                           fontSize: 12,
-              //                           letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
-              //                           fontWeight: FontWeight.normal,
-              //                           height: 6.666666666666667
-              //                       ),)
-              //                   ),
-              //                   Positioned(
-              //                       top: 220,
-              //                       left: 10,
-              //                       width: 155,
-              //                       child: ElevatedButton(
-              //                         child: Text("Add To Cart", style: TextStyle(color: Colors.white),),
-              //                         onPressed: ()=>{},
-              //                         style: ElevatedButton.styleFrom(
-              //                             primary: AppColors.primary
-              //                         ),
-              //                       )
-              //                   ),
-              //
-              //                 ]
-              //             )
-              //         ),
-              //       );
-              //     }),
-              //   ),
-              // )
             ],
           ),
         ),
@@ -287,7 +187,7 @@ class HomeScreen extends StatelessWidget {
     });
   }
 
-  Widget categoriesWidget() {
+  Widget categoriesWidget(context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
           horizontal: 10,
@@ -308,7 +208,7 @@ class HomeScreen extends StatelessWidget {
               },
               child: Container(
                 width: 100,
-                child: Center(child: customText(text: "Text ${index}", color: Color(0xff979797), fontSize: 18)),
+                child: Center(child: customText(text: "${CubitApp.get(context).categories[index]}", color:  index == CubitApp.get(context).indexCategory? AppColors.primary :  Color(0xff979797), fontSize: 18)),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
@@ -320,7 +220,7 @@ class HomeScreen extends StatelessWidget {
               ),
             );
           },
-          itemCount: 10,
+          itemCount: CubitApp.get(context).categories.length,
           scrollDirection: Axis.horizontal,
         ),
       ),

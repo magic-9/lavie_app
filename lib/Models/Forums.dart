@@ -20,6 +20,7 @@ class ForumsData {
   late final String userId;
   late final List<ForumLikes> forumLikes;
   late final List<ForumComments> forumComments;
+  late final UserForums userForums;
 
   ForumsData.fromJson(Map<String, dynamic> json){
     forumId = json['forumId'];
@@ -27,8 +28,15 @@ class ForumsData {
     description = json['description'];
     imageUrl = json['imageUrl'];
     userId = json['userId'];
-    forumLikes = List.from(json['ForumLikes']).map((e)=>ForumLikes.fromJson(e)).toList();
-    forumComments = List.from(json['ForumComments']).map((e)=>ForumComments.fromJson(e)).toList();
+    if(json['ForumLikes'] != ""){
+      forumLikes = List.from(json['ForumLikes']).map((e)=>ForumLikes.fromJson(e)).toList();
+    }
+    if(json['ForumComments'] != ""){
+      forumComments = List.from(json['ForumComments']).map((e)=>ForumComments.fromJson(e)).toList();
+    }
+    
+    userForums = UserForums.fromJson(json['user']);
+
   }
 }
 
@@ -56,5 +64,20 @@ class ForumComments {
     userId = json['userId'];
     comment = json['comment'];
   }
+
+}
+
+class UserForums {
+
+  late final String firstName;
+  late final String lastName;
+  late final String imageUrl;
+
+  UserForums.fromJson(Map<String, dynamic> json){
+    firstName = json['firstName'];
+    lastName = json['lastName'];
+    imageUrl = json['imageUrl'];
+  }
+
 
 }

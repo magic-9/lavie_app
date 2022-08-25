@@ -30,7 +30,8 @@ class _MainScreenState extends State<MainScreen> {
     return  BlocConsumer<CubitApp, StatesApp>(
       builder: (context, state) {
         return Scaffold(
-          appBar: appBar(context),
+            appBar: appBar(context),
+
           bottomNavigationBar: CurvedNavigationBar(
             backgroundColor: Colors.transparent,
             items: <Widget>[
@@ -56,7 +57,7 @@ class _MainScreenState extends State<MainScreen> {
               CubitApp.get(context).changeNavBottom(index);
             },
           ),
-          body: CubitApp.get(context).screens[CubitApp.get(context).bottomNavIndex],
+          body: CubitApp.get(context).screens[CubitApp.get(context).bottomNavIndex]['page'],
           floatingActionButton: CubitApp.get(context).bottomNavIndex == 0? FloatingActionButton(onPressed: (){
             Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddPostScreen()));
           },
@@ -73,7 +74,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
 
-  AppBar appBar(context){
+  AppBar? appBar(context){
     // if(CubitApp.get(context).bottomNavIndex == 4){
     //   return AppBar(
     //     actions: [
@@ -81,7 +82,18 @@ class _MainScreenState extends State<MainScreen> {
     //     ],
     //   );
     // }
-    return AppBar();
+    if(CubitApp.get(context).bottomNavIndex == 3  || CubitApp.get(context).bottomNavIndex == 0){
+      return AppBar(
+        centerTitle: true,
+        backgroundColor: CubitApp.get(context).screens[CubitApp.get(context).bottomNavIndex]['name'] == "Notification" ? Colors.white : Colors.transparent,
+        title: Text("${CubitApp.get(context).screens[CubitApp.get(context).bottomNavIndex]['name']}"),
+      );
+    }if(CubitApp.get(context).bottomNavIndex == 4 ||CubitApp.get(context).bottomNavIndex == 2 ){
+      return null;
+    }else{
+      return AppBar(
+      );
+    }
   }
 
   void floatAction(context){

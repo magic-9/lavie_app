@@ -5,10 +5,9 @@ import 'package:lavie_app/Cubit/StatesApp.dart';
 import 'package:lavie_app/Screens/MainScreen.dart';
 import 'package:lavie_app/Shard/utils/AppColors.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
-import '../Shard/local/CacheHelper.dart';
 import '../Shard/widgets/Widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -397,7 +396,7 @@ class _LoginScreenState extends State<LoginScreen> {
         }else if(state is StateLoginSuccess){
 
           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>  BlocProvider(
-              create: (context) => CubitApp(),
+              create: (context) => CubitApp()..getForums("all")..getCurrentUser(),
               child: const MainScreen())
           ));
           customToast(

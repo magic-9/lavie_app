@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context)=> CubitApp()..getForums('all'))
+        BlocProvider(create: (context)=> CubitApp()..getForums('all')..getCurrentUser())
       ],
       child: BlocConsumer<CubitApp,StatesApp>(
         builder: (context , state){

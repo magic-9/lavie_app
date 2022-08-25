@@ -5,19 +5,20 @@ import 'package:lavie_app/Cubit/StatesApp.dart';
 import 'package:lavie_app/Shard/utils/AppColors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../Shard/widgets/Widgets.dart';
-class FourmsScreen extends StatelessWidget {
-  const FourmsScreen({Key? key}) : super(key: key);
+class ForumsScreen extends StatelessWidget {
+  const ForumsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CubitApp, StatesApp>(builder: (context, state) {
-      return SingleChildScrollView(
-        child:  ConditionalBuilder(
-          builder: (context){
-            int? countFourms = CubitApp.get(context).forums?.data.length;
-            print(CubitApp.get(context).forums?.type);
-            return Container(
+      return ConditionalBuilder(
+        builder: (context){
+          int? countFourms = CubitApp.get(context).forums?.data.length;
+          return SingleChildScrollView(
+            child: Container(
+              height: 700,
               padding: EdgeInsets.all(15),
               child: Column(
                 children: [
@@ -51,115 +52,158 @@ class FourmsScreen extends StatelessWidget {
                   SizedBox(
                     height: 10,
                   ),
-                  Container(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    child: ListView.separated(itemBuilder: (context , index){
-                      return Container(
+                  Expanded(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: ListView.separated(itemBuilder: (context , index){
 
-                        padding: EdgeInsets.symmetric(
 
-                        ),
-                        decoration: BoxDecoration(
-                            color: Colors.white
+                        return Container(
 
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [Padding(padding: EdgeInsets.all(10) , child: Row(
-                                  children: [
-                                    Image.asset("assets/images/Ellipse287.png",),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        customText(text: "Mayar Mohamed", color: Colors.black, fontSize: 18),
-                                        SizedBox(
-                                          height: 5,
+                          padding: EdgeInsets.symmetric(
+
+                          ),
+                          decoration: BoxDecoration(
+                              color: Colors.white
+
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [Padding(padding: EdgeInsets.all(10) , child: Row(
+                                    children: [
+
+                                      CircleAvatar(
+                                        radius: 24,
+                                        child: CachedNetworkImage(
+                                          imageUrl:  "${CubitApp.get(context).forums?.data?[index].userForums.imageUrl}",
+                                          placeholder: (context, url) => Container(
+                                            child: Center(child: CircularProgressIndicator()),
+                                          ),
+                                          errorWidget: (context, url, error) => Icon(Icons.error),
+                                          fit: BoxFit.fitHeight,
+                                          height: 100,
                                         ),
-                                        customText(text: "8 minutes", color: Color(0xff979797), fontSize: 15)
-                                      ],
-                                    )
-                                  ],
-                                )),
-                                  Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            width:300,
+                                            child: Text(
+                                              "${CubitApp.get(context).forums?.data?[index].userForums.firstName} ${CubitApp.get(context).forums?.data?[index].userForums.lastName}",
+                                              style: TextStyle(
+                                                color: Colors.black, fontSize: 18,
+                                              ) ,
+                                              maxLines: 2,
 
-                                        customText(text: "${CubitApp.get(context).forums?.data?[index].title}", color: AppColors.primary, fontSize: 20),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        customText(text: "${CubitApp.get(context).forums?.data?[index].description}", color: Color(0xff8F8D8D), fontSize: 12),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                      ],
-                                    ),
-                                  )],
-                              ),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Color(0xffE5E5E5))
-                              ),
-                            ),
-                            Image.network("https://lavie.orangedigitalcenteregypt.com${CubitApp.get(context).forums?.data?[index].imageUrl}", fit: BoxFit.cover, width: MediaQuery.of(context).size.width, height: 300,),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    IconButton(onPressed: ()=>{}, icon:Icon( Icons.thumb_up_off_alt , size: 35, color: Color(0xff666565))),
-                                    SizedBox(
-                                      width: 2,
-                                    ),
-                                    customText(text: "${CubitApp.get(context).forums?.data?[index].forumLikes.length} Likes", color: Color(0xff666565), fontSize: 20),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    customText(text: "${CubitApp.get(context).forums?.data?[index].forumComments.length} Replies", color: Color(0xff666565), fontSize: 20)
-                                  ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          customText(text: "8 minutes", color: Color(0xff979797), fontSize: 15)
+                                        ],
+                                      )
+                                    ],
+                                  )),
+                                    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+
+                                          customText(text: "${CubitApp.get(context).forums?.data?[index].title}", color: AppColors.primary, fontSize: 20),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          customText(text: "${CubitApp.get(context).forums?.data?[index].description}", color: Color(0xff8F8D8D), fontSize: 12),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                        ],
+                                      ),
+                                    )],
                                 ),
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: Color(0xffE5E5E5))
+                                ),
+                              ),
+                              Container(
+                                child: CachedNetworkImage(
+                                  imageUrl:  "https://lavie.orangedigitalcenteregypt.com${CubitApp.get(context).forums?.data?[index].imageUrl}",
+                                  fit:BoxFit.cover,
+                                  placeholder: (context, url) => Container(
+                                    height: 200,
+                                    child: Center(child: CircularProgressIndicator()),
+                                  ),
+                                  errorWidget: (context, url, error) => Icon(Icons.error),
+                                ),
+                                width: MediaQuery.of(context).size.width,
+                                height: 200,
+                              ),
 
-                              ],
-                            ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      IconButton(onPressed: ()=>{}, icon:Icon( Icons.thumb_up_off_alt , size: 35, color: Color(0xff666565))),
+                                      SizedBox(
+                                        width: 2,
+                                      ),
+                                      customText(text: "${CubitApp.get(context).forums?.data?[index].forumLikes.length} Likes", color: Color(0xff666565), fontSize: 20),
+                                      SizedBox(
+                                        width: 20,
+                                      ),
+                                      customText(text: "${CubitApp.get(context).forums?.data?[index].forumComments.length} Replies", color: Color(0xff666565), fontSize: 20)
+                                    ],
+                                  ),
 
-                          ],
-                        ),
-                      );
-                    },separatorBuilder: (context , index){
-                      return SizedBox(
-                        height: 20,
-                      );
-                    }, itemCount: countFourms!),
+                                ],
+                              ),
+
+                            ],
+                          ),
+                        );
+                      },separatorBuilder: (context , index){
+                        return SizedBox(
+                          height: 20,
+                        );
+                      }, itemCount: countFourms!),
+                    ),
                   )
                 ],
               ),
-            );
-          }, condition: CubitApp.get(context).forums?.type == "Success" && state is! StateForumsLoading ,
-          fallback: (context){
-             return Container(
-               height: MediaQuery.of(context).size.height,
-               child: Center(child: CircularProgressIndicator()),
-             );
-          },
-        ),
+            ),
+          );
+
+
+        }, condition: state is! StateForumsLoading && CubitApp.get(context).forums?.data != null,
+        fallback: (context){
+          return Container(
+            child: Center(child: CircularProgressIndicator()),
+          );
+        },
       );
     }, listener: (context, state) {
            print("state=== ${state}");
+
+           if(state is StateGetCurrentUserError){
+             print(state.message);
+           }
     });
   }
 
@@ -170,8 +214,8 @@ class FourmsScreen extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: (){
+              CubitApp.get(context).changeIndexForums(0);
               CubitApp.get(context).getForums("all");
-             CubitApp.get(context).changeIndexForums(0);
             },
             child: Container(
               width: 150,
@@ -187,8 +231,10 @@ class FourmsScreen extends StatelessWidget {
           ),
           GestureDetector(
             onTap: (){
-              CubitApp.get(context).getForums('me');
+
               CubitApp.get(context).changeIndexForums(1);
+              CubitApp.get(context).getForums('me');
+
             },
             child: Container(
               width: 150,

@@ -29,6 +29,16 @@ class StateLoginError extends StatesApp{
 }
 class StateLoginLoading extends StatesApp{}
 
+class StateGetCurrentUserSuccess extends StatesApp{
+  User user;
+  StateGetCurrentUserSuccess(this.user);
+}
+class StateGetCurrentUserError extends StatesApp{
+   String message;
+  StateGetCurrentUserError(this.message);
+}
+class StateGetCurrentUserLoading extends StatesApp{}
+
 
 class StateForumsSuccess extends StatesApp{
   Forums forums;

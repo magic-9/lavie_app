@@ -57,6 +57,7 @@ dev_dependencies:
   font_awesome_flutter: ^10.1.0
   conditional_builder_null_safety: ^0.0.6
   image_picker: ^0.8.5+3
+  cached_network_image:
 
 
 # For information on the generic Dart part of this file, see the
@@ -82,6 +83,8 @@ flutter:
      - assets/images/pexels-scott-webb-2137271.png
      - assets/images/Ellipse105.png
      - assets/images/Rectangle1022.png
+     - assets/images/Group1264.png
+     - assets/images/icon.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

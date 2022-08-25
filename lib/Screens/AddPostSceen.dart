@@ -117,7 +117,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
                           }, child: customText(text: "Post", color: Colors.white, fontSize: 20) , style: ElevatedButton.styleFrom(
                               primary: AppColors.primary
                           )),
-                        )
+                        ),
+
                       ],)),
                   )
                 ],
@@ -125,12 +126,10 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
             },
             fallback: (context) {
-              return Center(
-                child: Container(
-                  child: CircularProgressIndicator(),
-                  width: 400,
-                  height: 400,
-                ),
+              return Container(
+                child: Center(child: CircularProgressIndicator()),
+                width: 400,
+                height: 400,
               );
             }),
           )

@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:lavie_app/Cubit/StatesApp.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lavie_app/Models/CurrentUser.dart';
 import 'package:lavie_app/Models/Forums.dart';
 import 'package:lavie_app/Models/User.dart';
 import 'package:lavie_app/Screens/HomeScreen.dart';
@@ -25,16 +26,33 @@ class CubitApp extends Cubit<StatesApp>{
   int indexForums= 0;
   int bottomNavIndex= 0;
   int indexCategory = 0;
+  List categories = ["All" , "Plants" , "Seeds" , "Tools"];
   TextEditingController searchForums = TextEditingController();
 
-  List screens = [
-        FourmsScreen(),
-        ScanScreen(),
-        HomeScreen(),
-        NotificationScreen(),
-        ProfileScreen()
+  List<Map<String,dynamic>> screens = [
+    {
+      "page" :   ForumsScreen(),
+      "name" : "Discussion Forums"
+    },
+    {
+      "page" : ScanScreen(),
+      "name" : "Scan"
+    },
+    {
+      "page" :   HomeScreen(),
+      "name" : "Home"
+    },
+    {
+      "page" :  NotificationScreen(),
+      "name" : "Notification"
+    },
+    {
+     "page" : ProfileScreen(),
+      "name" : "Profile"
+    }
   ];
   Forums? forums;
+  CurrentUser? currentUser;
 
   void changeNavBottom(index){
     bottomNavIndex = index;
@@ -102,22 +120,58 @@ class CubitApp extends Cubit<StatesApp>{
     });
   }
 
+  void getCurrentUser(){
+    // /api/v1/user/me
+
+    emit(StateGetCurrentUserLoading());
+    DioHelper.getData(path: "/api/v1/user/me" , token: CacheHelper.getData(key: "token")).then((value){
+      print(value.data);
+      if(value.data['statusCode'] == 401){
+        emit(StateGetCurrentUserError(value.data['message']));
+      }else if(value.statusCode == 200){
+
+        currentUser = CurrentUser.fromJson(value.data);
+        emit(StateGetCurrentUserSuccess(user!));
+      }
+
+    }).catchError((err){
+      print(err);
+      emit(StateGetCurrentUserError(err.toString()));
+    });
+  }
+
+   void getProducts(){
+
+    DioHelper.getData(path: "/api/v1/products" ,token: CacheHelper.getData(key: "token")).then((value){
+     if(value.data['statusCode'] == 200)
+     {
+      print("good ${value.data}");
+    }else if(value.data['statusCode'] == 401){
+       print("bad ${value.data}");
+     }
+    }).catchError((err){
+    print(err);
+   });
+
+  }
 
   void getForums(String? type){
     emit(StateForumsLoading());
-   DioHelper.getData(path: type == "all" ? "/api/v1/forums" : "/api/v1/forums/me" ,token: CacheHelper.getData(key: "token")).then((value){
+    DioHelper.getData(path: type == "all" ? "/api/v1/forums" : "/api/v1/forums/me" ,token: CacheHelper.getData(key: "token")).then((value){
+       // print("forums ${value.data}");
+      if(value.statusCode == 200){
+        emit(StateForumsLoading());
+        forums = Forums.fromJson(value.data);
+        emit(StateForumsSuccess(forums!));
+      }else if(value.statusCode == 401){
+        emit(StateForumsLoading());
+        emit(StateForumsError(value.data['message'].toString()));
+      }
+    }).catchError((err){
+      print(err.toString());
+      emit(StateForumsError(err.toString()));
+    });
 
-     if(value.statusCode == 200){
-       emit(StateForumsLoading());
-       forums = Forums.fromJson(value.data);
-       emit(StateForumsSuccess(forums!));
-     }else if(value.statusCode == 401){
-      emit(StateForumsError(value.data['message'].toString()));
-     }
-   }).catchError((err){
-     emit(StateForumsError(err.toString()));
-   });
-    
   }
 
   void getSearchForums(String? search){
@@ -127,7 +181,7 @@ class CubitApp extends Cubit<StatesApp>{
       if(value.statusCode == 200){
 
         forums = Forums.fromJson(value.data);
-        print(forums?.data?.length);
+
         emit(StateForumsSuccess(forums!));
       }else if(value.statusCode == 401){
         emit(StateForumsError(value.data['message'].toString()));
@@ -151,7 +205,7 @@ class CubitApp extends Cubit<StatesApp>{
         }).then((value) {
 
       if(value.statusCode == 200){
-        print(value.data);
+
         emit(StateAddPostSuccess(value.data['message']));
       }else if(value.statusCode == 400 ){
         emit(StateAddPostError(value.data['message'].toString()));
@@ -171,7 +225,7 @@ class CubitApp extends Cubit<StatesApp>{
          String base64Image =  "data:image/png;base64,"+base64Encode(bytes);
          imagePost = base64Image;
          imagePathPost = pickedFile.path;
-         print("img_pan : $base64Image");
+
 
       }else{
 
