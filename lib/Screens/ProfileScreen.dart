@@ -6,7 +6,7 @@ import 'package:lavie_app/Shard/local/CacheHelper.dart';
 import 'package:lavie_app/Shard/utils/AppColors.dart';
 import 'package:lavie_app/Shard/widgets/Widgets.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import '../Cubit/StatesApp.dart';
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -45,6 +45,7 @@ class ProfileScreen extends StatelessWidget {
                                    radius: 55, // Image radius
                                    backgroundImage: NetworkImage("${CubitApp.get(context).currentUser?.data?.imageUrl}"),
                                  ),
+
                                  SizedBox(
                                    height: 10,
                                  ),
@@ -168,6 +169,12 @@ class ProfileScreen extends StatelessWidget {
                                          )
                                      ),
                                    ),
+                                   // ElevatedButton(onPressed: (){
+                                   //   CacheHelper.removeData(key: "token");
+                                   //   Navigator.of(context).pushReplacement(
+                                   //     MaterialPageRoute(builder: (context)=>LoginScreen())
+                                   //   );
+                                   // }, child: Text("logout"))
                                  ],
                                ),
                              ),
