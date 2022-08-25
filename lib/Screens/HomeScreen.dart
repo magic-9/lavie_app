@@ -15,6 +15,7 @@ class HomeScreen extends StatelessWidget {
     return BlocConsumer<CubitApp,StatesApp>(builder: (context ,state){
       return Container(
         color: Colors.transparent,
+        
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,

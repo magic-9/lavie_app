@@ -225,8 +225,7 @@ class CubitApp extends Cubit<StatesApp>{
          String base64Image =  "data:image/png;base64,"+base64Encode(bytes);
          imagePost = base64Image;
          imagePathPost = pickedFile.path;
-
-
+         print(imagePathPost);
       }else{
 
 

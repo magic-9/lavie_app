@@ -138,7 +138,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
       if(state is StateAddPostError){
         customToast(
           color: Colors.red,
-          message: state.message,
+          message: state.message.replaceAll("[", "").replaceAll("]", ""),
         );
       }else if(state is StateAddPostSuccess){
         title.clear();

@@ -18,7 +18,7 @@ class ForumsScreen extends StatelessWidget {
           int? countFourms = CubitApp.get(context).forums?.data.length;
           return SingleChildScrollView(
             child: Container(
-              height: 700,
+              height: MediaQuery.of(context).size.height -150,
               padding: EdgeInsets.all(15),
               child: Column(
                 children: [
@@ -56,8 +56,6 @@ class ForumsScreen extends StatelessWidget {
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       child: ListView.separated(itemBuilder: (context , index){
-
-
                         return Container(
 
                           padding: EdgeInsets.symmetric(
@@ -77,9 +75,8 @@ class ForumsScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [Padding(padding: EdgeInsets.all(10) , child: Row(
                                     children: [
-
                                       CircleAvatar(
-                                        radius: 24,
+                                        radius: 23,
                                         child: CachedNetworkImage(
                                           imageUrl:  "${CubitApp.get(context).forums?.data?[index].userForums.imageUrl}",
                                           placeholder: (context, url) => Container(
@@ -98,7 +95,7 @@ class ForumsScreen extends StatelessWidget {
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
                                           Container(
-                                            width:300,
+                                            width:280,
                                             child: Text(
                                               "${CubitApp.get(context).forums?.data?[index].userForums.firstName} ${CubitApp.get(context).forums?.data?[index].userForums.lastName}",
                                               style: TextStyle(
